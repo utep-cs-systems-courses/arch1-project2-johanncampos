@@ -12,7 +12,7 @@ void led_init() {
 
 void led_update() {
   if (led_changed) {
-    char ledFlages = 0;
+    char ledFlags = 0;
 
     if (red_on) {ledFlags |= LED_RED;}
     if (green_on) {ledFlags |= LED_GREEN;}
