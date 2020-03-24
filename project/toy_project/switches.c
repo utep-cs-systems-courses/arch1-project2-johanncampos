@@ -7,16 +7,16 @@ char sw1_state_down, sw2_state_down, sw3_state_down, sw4_state_down;
 
 static char switch_update_interrupt_sense() {
   char p2val = P2IN;
-  PSIES |= (p2val & SWITCHES);
+  P2IES |= (p2val & SWITCHES);
   P2IES &= (p2val & ~SWITCHES);
   return p2val;
 }
 
 void switch_init() {
   P2REN |= SWITCHES;
-  PSIE = SWITCHES;
+  P2IE = SWITCHES;
   P2OUT |= SWITCHES;
-  PSDIR &= ~SWITCHES;
+  P2DIR &= ~SWITCHES;
   switch_update_interrupt_sense();
   led_update();
 }
