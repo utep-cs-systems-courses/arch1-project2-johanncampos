@@ -1,0 +1,42 @@
+# Blinky-Buzzy Toy
+## by Johann Campos
+
+## Setup
+
+To use this toy program on your msp430, go into the toy_project folder and
+from there, enter the command "make". This will call upon the make install
+method from the timerLib directory in the demos folder such that the necessary
+header files can be used for this toy. From there, simply enter "make load"
+and your msp430 will have the toy program loaded onto it.
+
+## Instructions
+
+Once the msp430 is ready, it will greet you with a "home screen" of sorts,
+glowing its red LED and flickering its green (or vice versa, depending on
+which msp430 board you have), simultaneously going back and
+forth from E to E-flat. From this point, you have four options, each
+corresponding to one of the four face buttons:
+1. The leftmost button will have the msp430 count from zero to three
+in binary using its aforementioned LEDs while also playing a C major chord
+from low note to high. This will repeat indefinitely until another option is
+chosen.
+2. The next button requires that you press and hold the button. This will
+begin a charging state, as indicated by the green LED increasing in brightness
+and the sound that gets higher every half second. After two seconds, the red
+LED will begin to blink at a steady pace, indicating that the charge is almost
+complete. After three seconds, the charge will be complete: To signify this, the brightest
+intensity of the green LED, the red LED will continue blinking, and the
+highest note of the speaker will be held until you release the button. Should
+you release the button at any point, both LEDs will turn off and a "boing"
+sound will be outputted. The msp430 will then remain silent until you press
+and/or hold the button again to repeat the process.
+3. The third button will begin to play a song, "Calimari Inkantation" from a
+game called "Splatoon," and an accompanying light show with the LEDs will
+serve to tie the experience together. When the song is finished, you will be
+returned to the home screen as mentioned above.
+4. This button does not do anything as of yet.
+
+## Cleanup
+Once you are done with the toy program, you can enter the command "make clean"
+to remove all temporary files generate by the Makefile, in both the
+toy_project and demos directories.
