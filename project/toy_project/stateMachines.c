@@ -103,8 +103,7 @@ void jump() {
     charge_level = 0;
     note_index = 0;
     charge_brightness = 32;
-    //End sound to indicate release
-    //buzzer_set_period(0);
+    //Make bounce noise to indicate release
     if (sec_fraction % 62 == 0 && bounce_index < 3) {
       buzzer_set_period(bounce[bounce_index]);
       ++bounce_index;
