@@ -11,7 +11,7 @@ AS		= msp430-elf-as
 all: install toy.elf
 
 #additional rules for files
-toy.elf: ${COMMON_OBJECTS} toyMain.o led.o stateMachines.o switches.o wd_interrupt_handler.o p2_interrupt_handler.o ../../demos/lib/libTimer.a
+toy.elf: ${COMMON_OBJECTS} toyMain.o led.o stateMachines.o switches.o buzzer.o wd_interrupt_handler.o p2_interrupt_handler.o ../../demos/lib/libTimer.a
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
 install:
@@ -30,6 +30,8 @@ led.o: led.c led.h
 stateMachines.o: led.h stateMachines.h
 
 switches.o: switches.h stateMachines.h
+
+buzzer.o: buzzer.h
 
 wd_interrupt_handler.o: stateMachines.h
 
