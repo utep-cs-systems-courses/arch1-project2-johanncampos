@@ -27,25 +27,21 @@ void switch_interrupt_handler() {
   //Detect button presses
   sw1_state_down = (p2val & SW1) ? 0 : 1;
   sw2_state_down = (p2val & SW2) ? 0 : 1;
+  //sw2_state_up = (p2val & SW2) ? 1 : 0;
   sw3_state_down = (p2val & SW3) ? 0 : 1;
   sw4_state_down = (p2val & SW4) ? 0 : 1;
 
-  if (sw1_state_down) {
-    green_on = 0;
-    red_on = 0;
+  if (sw1_state_down) { //Count to three
+    state = 1;
   }
-  if (sw2_state_down) {
-    green_on = 0;
-    red_on = 1;
+  if (sw2_state_down) { //Jump
+    state = 2;
   }
-  if (sw3_state_down) {
-    green_on = 1;
-    red_on = 0;
+  if (sw3_state_down) { //Play Calimari Inkantation
+    state = 3;
   }
   if (sw4_state_down) {
-    green_on = 1;
-    red_on = 1;
+    state = 4;
   }
 
-  //state_advane();
 }
