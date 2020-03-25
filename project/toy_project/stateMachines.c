@@ -4,7 +4,9 @@
 #include "buzzer.h"
 
 char state = 0;
-
+//Release boolean for jump()
+char charging = 0;
+  
 void state_advance() {
   switch (state) {
   case 0: //State 0: Home Screen
@@ -18,6 +20,8 @@ void state_advance() {
     led_update();
     break;
   case 2: //State 2: Jump
+    red_on = 0;
+    green_on = 0;
     jump();
     led_update();
     break;
@@ -53,7 +57,62 @@ void count_to_three() {
 }
 
 void jump() {
+  //Time Counter
+  static char sec_fraction = 0;
+
+  //Charge Counter & Accompanying Sound
+  static char charge_level = 0; //Max 12
+  static int charge_noise[] = {B3, D4, E4, G4, A4, B4, D5}; //Borrowed notes from song to indicate rising charge level
+  static int note_index = 0;
+  static int charge_brightness = 32; //LED on every 32 250ths of a second
+
+  //Jump Noise
+  static int bounce[] = {D4, G4, 0};
+  static int bounce_index = 0;
   
+  //Charging Mode
+  if (charging) {
+    //Reset bounce noise
+    bounce_index = 0;
+    //Every half second, increase charge
+    if (sec_fraction % 125 == 0 && charge_level < 6) {
+      ++charge_level; //Increase charge level after half a second
+      ++note_index; //Go up a note
+      if (charge_brightness != 1) {
+	charge_brightness /= 2; //Exponentially increase LED_brightness
+      }
+      sec_fraction = 0; //Reset time counter
+    }
+    //Shine green LED fraction of the time
+    if (sec_fraction % charge_brightness == 0) {
+      green_on = 1;
+    } else {
+      green_on = 0;
+    }
+    //Blink red LED when at 2/3 charge level
+    if (charge_level > 3) {
+      if (sec_fraction < 62) {
+	red_on = 1;
+      } else {
+	red_on = 0;
+      }
+    }
+    //Update buzzer
+    buzzer_set_period(charge_noise[note_index]);
+  } else { //Reset charge attributes and time counter upon release
+    charge_level = 0;
+    note_index = 0;
+    charge_brightness = 32;
+    //End sound to indicate release
+    //buzzer_set_period(0);
+    if (sec_fraction % 62 == 0 && bounce_index < 3) {
+      buzzer_set_period(bounce[bounce_index]);
+      ++bounce_index;
+      sec_fraction = 0;
+    }
+  }
+  
+  ++sec_fraction;//Keep track of time in place of wd_interrupt_handler
 }
 
 void inkantate() {
