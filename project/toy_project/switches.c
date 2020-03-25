@@ -1,9 +1,9 @@
 #include <msp430.h>
-#include "led.h"
 #include "stateMachines.h"
 #include "switches.h"
 
 char sw1_state_down, sw2_state_down, sw3_state_down, sw4_state_down;
+char sw2_state_up; //For jump() method
 
 static char switch_update_interrupt_sense() {
   char p2val = P2IN;
@@ -18,7 +18,6 @@ void switch_init() {
   P2OUT |= SWITCHES;
   P2DIR &= ~SWITCHES;
   switch_update_interrupt_sense();
-  led_update();
 }
 
 void switch_interrupt_handler() {
@@ -27,7 +26,7 @@ void switch_interrupt_handler() {
   //Detect button presses
   sw1_state_down = (p2val & SW1) ? 0 : 1;
   sw2_state_down = (p2val & SW2) ? 0 : 1;
-  //sw2_state_up = (p2val & SW2) ? 1 : 0;
+  sw2_state_up = (p2val & SW2) ? 1 : 0;
   sw3_state_down = (p2val & SW3) ? 0 : 1;
   sw4_state_down = (p2val & SW4) ? 0 : 1;
 
@@ -36,6 +35,10 @@ void switch_interrupt_handler() {
   }
   if (sw2_state_down) { //Jump
     state = 2;
+    charging = 1;
+  }
+  if (state == 2 && sw2_state_up) {//Special jump release
+    charging = 0;
   }
   if (sw3_state_down) { //Play Calimari Inkantation
     state = 3;
