@@ -7,4 +7,8 @@ void __interrupt_vec(WDT_VECTOR) WDT() {
     state_advance();
     blink_count = 0;
   }
+  if (state == 2) { //Special timer for jump (dim)
+    state_advance();
+    blink_count = 0;
+  }
 }
