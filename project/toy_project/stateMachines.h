@@ -2,6 +2,7 @@
 #define stateMachine_included
 
 extern char state;
+extern char charging;
 
 void state_advance();
 
