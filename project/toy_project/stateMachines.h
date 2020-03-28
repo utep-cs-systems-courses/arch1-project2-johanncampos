@@ -12,4 +12,6 @@ void jump();
 
 void inkantate();
 
+void loop();
+
 #endif
