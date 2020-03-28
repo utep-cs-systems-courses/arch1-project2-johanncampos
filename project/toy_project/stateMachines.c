@@ -192,8 +192,7 @@ void inkantate() {
 void loop() {
   static char point = 1;
   static char rising = 1;
-  static int scale[] = {D4, G4, B4, D5};
-
+  
   //Increment/Decrement LEDs and sound
   switch (point) {
   case 1:
