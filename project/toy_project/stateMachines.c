@@ -6,7 +6,7 @@
 char state = 0;
 //Release boolean for jump()
 char charging = 0;
-  
+
 void state_advance() {
   switch (state) {
   case 0: //State 0: Home Screen
@@ -29,7 +29,9 @@ void state_advance() {
     inkantate();
     led_update();
     break;
-  case 4: //State 4: 
+  case 4: //State 4: Loop
+    loop();
+    led_update();
     break;
   }
 }
@@ -184,5 +186,38 @@ void inkantate() {
   if (i == 4) { //Go to next verse
     i = 0;
     (verse == 16) ? (state = 0, verse = 0) : ++verse; //Exit state when song is finished
+  }
+}
+
+void loop() {
+  static char point = 1;
+  static char rising = 1;
+  static int scale[] = {D4, G4, B4, D5};
+
+  //Increment/Decrement LEDs and sound
+  switch (point) {
+  case 1:
+    red_on = 0; green_on = 0;
+    buzzer_set_period(D4); break;
+  case 2:
+    red_on = 0; green_on = 1;
+    buzzer_set_period(G4); break;
+  case 3:
+    red_on = 1; green_on = 1;
+    buzzer_set_period(B4); break;
+  case 4:
+    red_on = 1; green_on = 0;
+    buzzer_set_period(D5); break;
+  }
+
+  //Turn around at peak and valley
+  if (rising) {
+    if (++point == 4) {
+      rising = 0;
+    }
+  } else {
+    if (--point == 1) {
+      rising = 1;
+    }
   }
 }
