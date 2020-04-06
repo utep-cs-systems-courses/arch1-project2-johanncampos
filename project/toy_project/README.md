@@ -6,6 +6,7 @@ included the assembly file and its header so that it could be observed and
 graded independent of the actual project. This is in part because I believed
 that was the new instructions, contrary to the original project instructions,
 but also because I ran into a strange error with the assembly.
+
 Specifically, rather than any sort of compilation error, it was the use of the
 green_on address. If one was to incorporate the assembly method into the
 project, as I had initially done, there would be no errors apart from the
@@ -16,6 +17,7 @@ each state advance. (To be clear, I do know that the states are advancing
 correctly because the C major scale is still coming out of the speaker from 0
 to 3; thus, it is simply the LED booleans -- specifically green_on -- that is
 the problem.)
+
 As of this submission, I do not know why this is so. Syntactically, the
 "count_to_three_assembly.s" file should be an accurate translation of the
 original method, switch statement and all. It is simply this oddity regarding
